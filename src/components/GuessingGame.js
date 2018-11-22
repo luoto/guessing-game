@@ -4,11 +4,12 @@ import Health from './Health';
 import SecretWord from './SecretWord';
 import countDistinctLetters from '../helpers/countDistinctLetters';
 import letters from '../constants/letters';
+import api from '../helpers/api';
 
 class GuessingGame extends Component {
   state = {
     health: 6,
-    secretWord: 'banana',
+    secretWord: '',
     revealedLetters: [],
     letters,
     correctlyGuessedLetters: [],
@@ -16,6 +17,14 @@ class GuessingGame extends Component {
     gameover: false,
     winner: null
   };
+
+  async componentDidMount() {
+    const secretWords = await api.getWords();
+    const randomIndex = Math.floor(Math.random() * secretWords.length);
+    this.setState({
+      secretWord: secretWords[randomIndex]
+    });
+  }
 
   onGuess = guess => {
     const { gameover } = this.state;
@@ -70,10 +79,15 @@ class GuessingGame extends Component {
     return (
       <div className="App">
         <Health health={this.state.health} />
-        <SecretWord
-          secretWord={this.state.secretWord}
-          revealedLetters={this.state.revealedLetters}
-        />
+        {this.state.secretWord ? (
+          <SecretWord
+            secretWord={this.state.secretWord}
+            revealedLetters={this.state.revealedLetters}
+          />
+        ) : (
+          <div>Getting secretword ...</div>
+        )}
+
         <Guess
           onGuess={this.onGuess}
           letters={this.state.letters}
