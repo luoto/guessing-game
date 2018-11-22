@@ -3,13 +3,14 @@ import Guess from './Guess';
 import Health from './Health';
 import SecretWord from './SecretWord';
 import countDistinctLetters from '../helpers/countDistinctLetters';
+import letters from '../constants/letters';
 
 class GuessingGame extends Component {
   state = {
     health: 6,
     secretWord: 'banana',
     revealedLetters: [],
-    letters: 'qwertyuiopasdfghjklzxcvbnm'.split(''),
+    letters,
     correctlyGuessedLetters: [],
     incorrectlyGuessedLetters: [],
     gameover: false,
