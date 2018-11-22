@@ -1,7 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import letters from '../constants/letters';
 
 class Guess extends Component {
+  componentDidMount() {
+    window.addEventListener('keydown', this.onKeyDownHandler);
+  }
+
+  componentWillMount() {
+    window.removeEventListener('keydown', this.onKeyDownHandler);
+  }
+
   onClickHandler = e => {
     const selectedLetter = e.target.textContent;
     this.props.onGuess(selectedLetter);
@@ -14,6 +23,14 @@ class Guess extends Component {
       correctlyGuessedLetters.includes(letter) ||
       incorrectlyGuessedLetters.includes(letter)
     );
+  };
+
+  onKeyDownHandler = e => {
+    const { key } = e;
+
+    if (!this.isUsed(key) && letters.includes(key)) {
+      this.props.onGuess(key);
+    }
   };
 
   render() {
