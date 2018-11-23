@@ -39,11 +39,38 @@ class GuessingGame extends Component {
     const { gameover } = this.state;
 
     if (!gameover) {
-      this.state.secretWord.includes(guess)
-        ? this.guessCorrect(guess)
-        : this.guessIncorrect(guess);
+      if (guess.length === 1) {
+        this.state.secretWord.includes(guess)
+          ? this.guessCorrect(guess)
+          : this.guessIncorrect(guess);
+      } else {
+        this.state.secretWord === guess
+          ? this.revealWinner(guess)
+          : this.decreaseHealth();
+      }
     }
   };
+
+  revealWinner(guess) {
+    this.setState({
+      winner: 'Guesser',
+      gameover: true,
+      revealedLetters: [...this.state.revealedLetters, ...guess]
+    });
+  }
+
+  decreaseHealth() {
+    this.setState(state => {
+      let newState = {
+        health: state.health - 1
+      };
+
+      if (state.health === 1) {
+        newState.gameover = true;
+        newState.winner = 'Secret Keeper';
+      }
+    });
+  }
 
   guessIncorrect = guess => {
     const { incorrectlyGuessedLetters } = this.state;

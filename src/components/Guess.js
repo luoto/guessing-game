@@ -32,6 +32,10 @@ const GuessWrapper = styled.div`
 `;
 
 class Guess extends Component {
+  state = {
+    guess: ''
+  };
+
   componentDidMount() {
     window.addEventListener('keydown', this.onKeyDownHandler);
   }
@@ -60,6 +64,22 @@ class Guess extends Component {
     if (!this.isUsed(key) && letters.includes(key)) {
       this.props.onGuess(key);
     }
+  };
+
+  stopPropagation = e => {
+    e.stopPropagation();
+  };
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  makeFullWordGuess = () => {
+    this.props.onGuess(this.state.guess);
+    this.setState({ guess: '' });
   };
 
   getKeyboardRows = () => {
@@ -106,7 +126,20 @@ class Guess extends Component {
     );
 
     return (
-      <GuessWrapper>{this.getKeyboardRows().map(renderRows)}</GuessWrapper>
+      <GuessWrapper>
+        <div>
+          <input
+            name="guess"
+            onKeyDown={this.stopPropagation}
+            onChange={this.handleChange}
+            value={this.state.guess}
+          />
+          <button style={{ width: 'auto' }} onClick={this.makeFullWordGuess}>
+            guess
+          </button>
+        </div>
+        {this.getKeyboardRows().map(renderRows)}
+      </GuessWrapper>
     );
   }
 }
