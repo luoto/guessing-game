@@ -1,12 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
-const SecretWord = ({ secretWord, revealedLetters }) =>
-  Array.from(secretWord).map((letter, index) => (
-    <div key={index} letter={letter}>
-      {revealedLetters.includes(letter) ? letter : '_'}
-    </div>
-  ));
+const SecretWordWrapper = styled.div`
+  margin: 16px;
+
+  div {
+    display: inline-block;
+    margin-left: 8px;
+  }
+`;
+
+const SecretWord = ({ secretWord, revealedLetters }) => (
+  <SecretWordWrapper>
+    {Array.from(secretWord).map((letter, index) => (
+      <div key={index} letter={letter}>
+        {revealedLetters.includes(letter) ? letter : '_'}
+      </div>
+    ))}
+  </SecretWordWrapper>
+);
 
 SecretWord.propTypes = {
   secretWord: PropTypes.string.isRequired,

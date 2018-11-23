@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Guess from './Guess';
 import Health from './Health';
 import SecretWord from './SecretWord';
 import countDistinctLetters from '../helpers/countDistinctLetters';
 import letters from '../constants/letters';
 import api from '../helpers/api';
+
+const GuessingGameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+`;
 
 class GuessingGame extends Component {
   state = {
@@ -77,7 +86,7 @@ class GuessingGame extends Component {
 
   render() {
     return (
-      <div className="App">
+      <GuessingGameWrapper className="App">
         <Health health={this.state.health} />
         {this.state.secretWord ? (
           <SecretWord
@@ -95,7 +104,7 @@ class GuessingGame extends Component {
           incorrectlyGuessedLetters={this.state.incorrectlyGuessedLetters}
         />
         {this.state.gameover && <div>Winner: {this.state.winner}</div>}
-      </div>
+      </GuessingGameWrapper>
     );
   }
 }
