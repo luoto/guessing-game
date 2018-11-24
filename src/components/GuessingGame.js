@@ -39,7 +39,6 @@ class GuessingGame extends Component {
 
   async componentDidUpdate(prevProps) {
     if (prevProps.settings.difficulty !== this.props.settings.difficulty) {
-      this.getSecretWord();
       this.resetGame();
     }
   }
@@ -52,6 +51,7 @@ class GuessingGame extends Component {
   }
 
   resetGame = () => {
+    this.getSecretWord();
     this.setState({
       currentHealth: 6,
       revealedLetters: [],
@@ -155,13 +155,13 @@ class GuessingGame extends Component {
         ) : (
           <div>Getting secretword ...</div>
         )}
-
         <Guess
           onGuess={this.onGuess}
           letters={this.state.letters}
           correctlyGuessedLetters={this.state.correctlyGuessedLetters}
           incorrectlyGuessedLetters={this.state.incorrectlyGuessedLetters}
         />
+        <button onClick={this.resetGame}>Reset Game</button>
         {this.state.gameover && <div>Winner: {this.state.winner}</div>}
         <Leaderboard
           playerwin={this.state.gameover && this.state.winner === PLAYER2}
