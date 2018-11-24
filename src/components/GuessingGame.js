@@ -22,7 +22,8 @@ const GuessingGameWrapper = styled.div`
 
 class GuessingGame extends Component {
   state = {
-    health: 6,
+    totalHealth: 6,
+    currentHealth: 6,
     secretWord: '',
     revealedLetters: [],
     letters,
@@ -52,7 +53,7 @@ class GuessingGame extends Component {
 
   resetGame = () => {
     this.setState({
-      health: 6,
+      currentHealth: 6,
       revealedLetters: [],
       correctlyGuessedLetters: [],
       incorrectlyGuessedLetters: [],
@@ -88,10 +89,10 @@ class GuessingGame extends Component {
   decreaseHealth() {
     this.setState(state => {
       let newState = {
-        health: state.health - 1
+        currentHealth: state.currentHealth - 1
       };
 
-      if (state.health === 1) {
+      if (state.currentHealth === 1) {
         newState.gameover = true;
         newState.winner = PLAYER1;
       }
@@ -106,10 +107,10 @@ class GuessingGame extends Component {
     this.setState(state => {
       let newState = {
         incorrectlyGuessedLetters: [...incorrectlyGuessedLetters, guess],
-        health: state.health - 1
+        currentHealth: state.currentHealth - 1
       };
 
-      if (state.health === 1) {
+      if (state.currentHealth === 1) {
         newState.gameover = true;
         newState.winner = PLAYER1;
       }
@@ -142,7 +143,10 @@ class GuessingGame extends Component {
   render() {
     return (
       <GuessingGameWrapper className="App">
-        <Health health={this.state.health} />
+        <Health
+          totalHealth={this.state.totalHealth}
+          currentHealth={this.state.currentHealth}
+        />
         {this.state.secretWord ? (
           <SecretWord
             secretWord={this.state.secretWord}
@@ -162,7 +166,7 @@ class GuessingGame extends Component {
         <Leaderboard
           playerwin={this.state.gameover && this.state.winner === PLAYER2}
           difficulty={this.props.settings.difficulty}
-          score={this.state.health}
+          score={this.state.currentHealth}
         />
       </GuessingGameWrapper>
     );

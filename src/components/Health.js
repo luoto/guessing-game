@@ -18,14 +18,21 @@ const HealthWrapper = styled.div`
   }
 `;
 
-const Health = ({ health }) => {
+const Health = ({ totalHealth, currentHealth }) => {
   return (
     <HealthWrapper>
-      {Array(health)
+      {Array(currentHealth)
         .fill(null)
         .map((_, index) => (
           <div key={index}>
             <i className="fas fa-heart fa-2x" />
+          </div>
+        ))}
+      {Array(totalHealth - currentHealth)
+        .fill(null)
+        .map((_, index) => (
+          <div key={index}>
+            <i className="far fa-heart fa-2x" />
           </div>
         ))}
     </HealthWrapper>
@@ -33,7 +40,8 @@ const Health = ({ health }) => {
 };
 
 Health.propTypes = {
-  health: PropTypes.number.isRequired
+  currentHealth: PropTypes.number.isRequired,
+  totalHealth: PropTypes.number.isRequired
 };
 
 export default Health;
