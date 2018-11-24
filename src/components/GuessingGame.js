@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Guess from './Guess';
 import Health from './Health';
@@ -27,13 +28,34 @@ class GuessingGame extends Component {
     winner: null
   };
 
-  async componentDidMount() {
-    const secretWords = await api.getWords();
-    const randomIndex = Math.floor(Math.random() * secretWords.length);
+  componentDidMount() {
+    this.getSecretWord();
+  }
+
+  async componentDidUpdate(prevProps) {
+    if (prevProps.settings.difficulty !== this.props.settings.difficulty) {
+      this.getSecretWord();
+      this.resetGame();
+    }
+  }
+
+  async getSecretWord() {
+    const secretWord = await api.getWord({ difficulty: this.props.difficulty });
     this.setState({
-      secretWord: secretWords[randomIndex]
+      secretWord
     });
   }
+
+  resetGame = () => {
+    this.setState({
+      health: 6,
+      revealedLetters: [],
+      correctlyGuessedLetters: [],
+      incorrectlyGuessedLetters: [],
+      gameover: false,
+      winner: null
+    });
+  };
 
   onGuess = guess => {
     const { gameover } = this.state;
@@ -69,6 +91,8 @@ class GuessingGame extends Component {
         newState.gameover = true;
         newState.winner = 'Secret Keeper';
       }
+
+      return newState;
     });
   }
 
@@ -135,5 +159,11 @@ class GuessingGame extends Component {
     );
   }
 }
+
+GuessingGame.propTypes = {
+  settings: PropTypes.shape({
+    difficulty: PropTypes.string
+  })
+};
 
 export default GuessingGame;
