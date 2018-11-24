@@ -7,6 +7,10 @@ import SecretWord from './SecretWord';
 import countDistinctLetters from '../helpers/countDistinctLetters';
 import letters from '../constants/letters';
 import api from '../helpers/api';
+import Leaderboard from './Leaderboard';
+
+const PLAYER1 = 'Secret Keeper';
+const PLAYER2 = 'Guesser';
 
 const GuessingGameWrapper = styled.div`
   display: flex;
@@ -75,7 +79,7 @@ class GuessingGame extends Component {
 
   revealWinner(guess) {
     this.setState({
-      winner: 'Guesser',
+      winner: PLAYER2,
       gameover: true,
       revealedLetters: [...this.state.revealedLetters, ...guess]
     });
@@ -89,7 +93,7 @@ class GuessingGame extends Component {
 
       if (state.health === 1) {
         newState.gameover = true;
-        newState.winner = 'Secret Keeper';
+        newState.winner = PLAYER1;
       }
 
       return newState;
@@ -107,7 +111,7 @@ class GuessingGame extends Component {
 
       if (state.health === 1) {
         newState.gameover = true;
-        newState.winner = 'Score Keeper';
+        newState.winner = PLAYER1;
       }
 
       return newState;
@@ -128,7 +132,7 @@ class GuessingGame extends Component {
         countDistinctLetters(secretWord)
       ) {
         newState.gameover = true;
-        newState.winner = 'Guesser';
+        newState.winner = PLAYER2;
       }
 
       return newState;
@@ -155,6 +159,11 @@ class GuessingGame extends Component {
           incorrectlyGuessedLetters={this.state.incorrectlyGuessedLetters}
         />
         {this.state.gameover && <div>Winner: {this.state.winner}</div>}
+        <Leaderboard
+          playerwin={this.state.gameover && this.state.winner === PLAYER2}
+          difficulty={this.props.settings.difficulty}
+          score={this.state.health}
+        />
       </GuessingGameWrapper>
     );
   }
