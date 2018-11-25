@@ -43,6 +43,7 @@ class Leaderboard extends Component {
   render() {
     return (
       <div>
+        <h2>Leaderboard</h2>
         {this.props.playerwin && this.state.showSubmit && (
           <SubmitScore saveScore={this.saveScore} />
         )}
