@@ -43,18 +43,18 @@ class GuessingGame extends Component {
     this.getSecretWord();
   }
 
-  async componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (prevProps.settings.difficulty !== this.props.settings.difficulty) {
       this.resetGame();
     }
   }
 
-  async getSecretWord() {
+  getSecretWord = async () => {
     const secretWord = await api.getWord({ difficulty: this.props.difficulty });
     this.setState({
       secretWord
     });
-  }
+  };
 
   resetGame = () => {
     this.getSecretWord();
@@ -71,12 +71,10 @@ class GuessingGame extends Component {
     const guessedLetter = guess.length === 1 && secretWord.includes(guess);
     const guessedWord = secretWord === guess;
 
-    guessedLetter || guessedWord
-      ? this.guessCorrect(guess)
-      : this.guessIncorrect(guess);
+    guessedLetter || guessedWord ? this.correct(guess) : this.incorrect(guess);
   };
 
-  guessCorrect = guess => {
+  correct = guess => {
     const { secretWord } = this.state;
 
     this.setState(state => {
@@ -103,7 +101,7 @@ class GuessingGame extends Component {
     });
   };
 
-  guessIncorrect = guess => {
+  incorrect = guess => {
     const { incorrectlyGuessedLetters } = this.state;
 
     this.setState(state => {
@@ -116,7 +114,7 @@ class GuessingGame extends Component {
           guess
         ];
       } else {
-        newState.guessedWords = [...this.state.guessedWords, guess];
+        newState.guessedWords = [...state.guessedWords, guess];
       }
 
       const outOfHealth = state.currentHealth === 1;
@@ -144,6 +142,8 @@ class GuessingGame extends Component {
       gameover
     } = this.state;
 
+    const playerwin = gameover && winner === PLAYER2;
+
     return (
       <GuessingGameWrapper className="App">
         <Rules />
@@ -159,7 +159,7 @@ class GuessingGame extends Component {
         <GuessedWords words={guessedWords} />
         <Winner gameover={gameover} winner={winner} />
         <Leaderboard
-          playerwin={gameover && winner === PLAYER2}
+          playerwin={playerwin}
           difficulty={difficulty}
           score={currentHealth}
         />
