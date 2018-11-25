@@ -13,11 +13,15 @@ const SecretWordWrapper = styled.div`
 
 const SecretWord = ({ secretWord, revealedLetters }) => (
   <SecretWordWrapper>
-    {Array.from(secretWord).map((letter, index) => (
-      <div key={index} letter={letter}>
-        {revealedLetters.includes(letter) ? letter : '_'}
-      </div>
-    ))}
+    {secretWord ? (
+      Array.from(secretWord).map((letter, index) => (
+        <div key={index} letter={letter}>
+          {revealedLetters.includes(letter) ? letter : '_'}
+        </div>
+      ))
+    ) : (
+      <div>Getting secret word...</div>
+    )}
   </SecretWordWrapper>
 );
 

@@ -148,36 +148,38 @@ class GuessingGame extends Component {
   };
 
   render() {
+    const { difficulty } = this.props.settings;
+
+    const {
+      totalHealth,
+      currentHealth,
+      secretWord,
+      revealedLetters,
+      correctlyGuessedLetters,
+      incorrectlyGuessedLetters,
+      guessedWords,
+      winner,
+      gameover
+    } = this.state;
+
     return (
       <GuessingGameWrapper className="App">
         <Rules />
-        <Health
-          totalHealth={this.state.totalHealth}
-          currentHealth={this.state.currentHealth}
-        />
-        {this.state.secretWord ? (
-          <SecretWord
-            secretWord={this.state.secretWord}
-            revealedLetters={this.state.revealedLetters}
-          />
-        ) : (
-          <div>Getting secretword ...</div>
-        )}
+        <Health totalHealth={totalHealth} currentHealth={currentHealth} />
+        <SecretWord secretWord={secretWord} revealedLetters={revealedLetters} />
         <Guess
           onGuess={this.onGuess}
-          letters={this.state.letters}
-          correctlyGuessedLetters={this.state.correctlyGuessedLetters}
-          incorrectlyGuessedLetters={this.state.incorrectlyGuessedLetters}
+          letters={letters}
+          correctlyGuessedLetters={correctlyGuessedLetters}
+          incorrectlyGuessedLetters={incorrectlyGuessedLetters}
         />
         <button onClick={this.resetGame}>Reset Game</button>
-
-        <GuessedWords words={this.state.guessedWords} />
-        {this.state.gameover && <div>Winner: {this.state.winner}</div>}
+        <GuessedWords words={guessedWords} />
         <Winner gameover={gameover} winner={winner} />
         <Leaderboard
-          playerwin={this.state.gameover && this.state.winner === PLAYER2}
-          difficulty={this.props.settings.difficulty}
-          score={this.state.currentHealth}
+          playerwin={gameover && winner === PLAYER2}
+          difficulty={difficulty}
+          score={currentHealth}
         />
       </GuessingGameWrapper>
     );
