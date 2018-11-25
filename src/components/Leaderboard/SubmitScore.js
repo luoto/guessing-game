@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import stopPropagation from '../../helpers/stopPropagation';
 
 class SubmitScore extends Component {
   state = {
     username: ''
-  };
-
-  preventPropagation = e => {
-    e.stopPropagation();
   };
 
   onChange = e => {
@@ -31,7 +28,7 @@ class SubmitScore extends Component {
           name="username"
           value={this.state.value}
           onChange={this.onChange}
-          onKeyDown={this.preventPropagation}
+          onKeyDown={stopPropagation}
         />
         <button onClick={this.saveScore}>Submit</button>
       </div>

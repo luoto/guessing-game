@@ -4,6 +4,8 @@ import letters from '../constants/letters';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 
+import stopPropagation from '../helpers/stopPropagation';
+
 const GuessWrapper = styled.div`
   margin: 16px;
   width: 400px;
@@ -64,10 +66,6 @@ class Guess extends Component {
     if (!this.isUsed(key) && letters.includes(key)) {
       this.props.onGuess(key);
     }
-  };
-
-  stopPropagation = e => {
-    e.stopPropagation();
   };
 
   handleChange = e => {
@@ -137,7 +135,7 @@ class Guess extends Component {
         <div>
           <input
             name="guess"
-            onKeyDown={this.stopPropagation}
+            onKeyDown={stopPropagation}
             onChange={this.handleChange}
             value={this.state.guess}
             placeholder="Enter a word..."
