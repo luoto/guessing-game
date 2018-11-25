@@ -14,6 +14,19 @@ import Winner from './Winner';
 
 const PLAYER1 = 'Secret Keeper';
 const PLAYER2 = 'Guesser';
+const STARTING_HEALTH = 6;
+
+const initialState = {
+  totalHealth: STARTING_HEALTH,
+  currentHealth: STARTING_HEALTH,
+  secretWord: '',
+  revealedLetters: [],
+  correctlyGuessedLetters: [],
+  incorrectlyGuessedLetters: [],
+  guessedWords: [],
+  gameover: false,
+  winner: null
+};
 
 const GuessingGameWrapper = styled.div`
   display: flex;
@@ -24,18 +37,7 @@ const GuessingGameWrapper = styled.div`
 `;
 
 class GuessingGame extends Component {
-  state = {
-    totalHealth: 6,
-    currentHealth: 6,
-    secretWord: '',
-    revealedLetters: [],
-    letters,
-    correctlyGuessedLetters: [],
-    incorrectlyGuessedLetters: [],
-    guessedWords: [],
-    gameover: false,
-    winner: null
-  };
+  state = initialState;
 
   componentDidMount() {
     this.getSecretWord();
@@ -56,91 +58,71 @@ class GuessingGame extends Component {
 
   resetGame = () => {
     this.getSecretWord();
-    this.setState({
-      currentHealth: 6,
-      revealedLetters: [],
-      correctlyGuessedLetters: [],
-      incorrectlyGuessedLetters: [],
-      guessedWords: [],
-      gameover: false,
-      winner: null
-    });
+    this.setState(initialState);
   };
 
   onGuess = guess => {
-    const { gameover } = this.state;
+    const { gameover, secretWord } = this.state;
 
-    if (!gameover) {
-      if (guess.length === 1) {
-        this.state.secretWord.includes(guess)
-          ? this.guessCorrect(guess)
-          : this.guessIncorrect(guess);
-      } else {
-        this.state.guessedWords.push(guess);
-        this.setState({ guessedWords: this.state.guessedWords });
-        this.state.secretWord === guess
-          ? this.revealWinner(guess)
-          : this.decreaseHealth();
-      }
+    if (gameover) {
+      return;
     }
-  };
 
-  revealWinner(guess) {
-    this.setState({
-      winner: PLAYER2,
-      gameover: true,
-      revealedLetters: [...this.state.revealedLetters, ...guess]
-    });
-  }
+    const guessedLetter = guess.length === 1 && secretWord.includes(guess);
+    const guessedWord = secretWord === guess;
 
-  decreaseHealth() {
-    this.setState(state => {
-      let newState = {
-        currentHealth: state.currentHealth - 1
-      };
-
-      if (state.currentHealth === 1) {
-        newState.gameover = true;
-        newState.winner = PLAYER1;
-      }
-
-      return newState;
-    });
-  }
-
-  guessIncorrect = guess => {
-    const { incorrectlyGuessedLetters } = this.state;
-
-    this.setState(state => {
-      let newState = {
-        incorrectlyGuessedLetters: [...incorrectlyGuessedLetters, guess],
-        currentHealth: state.currentHealth - 1
-      };
-
-      if (state.currentHealth === 1) {
-        newState.gameover = true;
-        newState.winner = PLAYER1;
-      }
-
-      return newState;
-    });
+    guessedLetter || guessedWord
+      ? this.guessCorrect(guess)
+      : this.guessIncorrect(guess);
   };
 
   guessCorrect = guess => {
     const { secretWord } = this.state;
 
     this.setState(state => {
-      let newState = {
-        correctlyGuessedLetters: [...state.correctlyGuessedLetters, guess],
-        revealedLetters: [...state.revealedLetters, guess]
-      };
+      let newState = {};
 
-      if (
-        state.revealedLetters.length + 1 ===
-        countDistinctLetters(secretWord)
-      ) {
+      const guessedLetter = guess.length === 1;
+      if (guessedLetter) {
+        newState.correctlyGuessedLetters = [
+          ...state.correctlyGuessedLetters,
+          guess
+        ];
+        newState.revealedLetters = [...state.revealedLetters, guess];
+      }
+
+      const revealedAllLetters =
+        state.revealedLetters.length + 1 === countDistinctLetters(secretWord);
+      if (revealedAllLetters || guess === secretWord) {
         newState.gameover = true;
         newState.winner = PLAYER2;
+        newState.revealedLetters = [...this.state.revealedLetters, ...guess];
+      }
+
+      return newState;
+    });
+  };
+
+  guessIncorrect = guess => {
+    const { incorrectlyGuessedLetters } = this.state;
+
+    this.setState(state => {
+      let newState = { currentHealth: state.currentHealth - 1 };
+
+      const guessedLetter = guess.length === 1;
+      if (guessedLetter) {
+        newState.incorrectlyGuessedLetters = [
+          ...incorrectlyGuessedLetters,
+          guess
+        ];
+      } else {
+        newState.guessedWords = [...this.state.guessedWords, guess];
+      }
+
+      const outOfHealth = state.currentHealth === 1;
+      if (outOfHealth) {
+        newState.gameover = true;
+        newState.winner = PLAYER1;
       }
 
       return newState;
