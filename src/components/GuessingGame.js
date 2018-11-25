@@ -8,6 +8,7 @@ import countDistinctLetters from '../helpers/countDistinctLetters';
 import letters from '../constants/letters';
 import api from '../helpers/api';
 import Leaderboard from './Leaderboard';
+import GuessedWords from './GuessedWords';
 
 const PLAYER1 = 'Secret Keeper';
 const PLAYER2 = 'Guesser';
@@ -29,6 +30,7 @@ class GuessingGame extends Component {
     letters,
     correctlyGuessedLetters: [],
     incorrectlyGuessedLetters: [],
+    guessedWords: [],
     gameover: false,
     winner: null
   };
@@ -57,6 +59,7 @@ class GuessingGame extends Component {
       revealedLetters: [],
       correctlyGuessedLetters: [],
       incorrectlyGuessedLetters: [],
+      guessedWords: [],
       gameover: false,
       winner: null
     });
@@ -71,6 +74,8 @@ class GuessingGame extends Component {
           ? this.guessCorrect(guess)
           : this.guessIncorrect(guess);
       } else {
+        this.state.guessedWords.push(guess);
+        this.setState({ guessedWords: this.state.guessedWords });
         this.state.secretWord === guess
           ? this.revealWinner(guess)
           : this.decreaseHealth();
@@ -162,6 +167,8 @@ class GuessingGame extends Component {
           incorrectlyGuessedLetters={this.state.incorrectlyGuessedLetters}
         />
         <button onClick={this.resetGame}>Reset Game</button>
+
+        <GuessedWords words={this.state.guessedWords} />
         {this.state.gameover && <div>Winner: {this.state.winner}</div>}
         <Leaderboard
           playerwin={this.state.gameover && this.state.winner === PLAYER2}
