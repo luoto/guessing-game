@@ -9,6 +9,7 @@ import letters from '../constants/letters';
 import api from '../helpers/api';
 import Leaderboard from './Leaderboard';
 import GuessedWords from './GuessedWords';
+import Rules from './Rules';
 
 const PLAYER1 = 'Secret Keeper';
 const PLAYER2 = 'Guesser';
@@ -148,6 +149,7 @@ class GuessingGame extends Component {
   render() {
     return (
       <GuessingGameWrapper className="App">
+        <Rules />
         <Health
           totalHealth={this.state.totalHealth}
           currentHealth={this.state.currentHealth}
