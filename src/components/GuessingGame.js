@@ -10,6 +10,7 @@ import api from '../helpers/api';
 import Leaderboard from './Leaderboard';
 import GuessedWords from './GuessedWords';
 import Rules from './Rules';
+import Winner from './Winner';
 
 const PLAYER1 = 'Secret Keeper';
 const PLAYER2 = 'Guesser';
@@ -172,6 +173,7 @@ class GuessingGame extends Component {
 
         <GuessedWords words={this.state.guessedWords} />
         {this.state.gameover && <div>Winner: {this.state.winner}</div>}
+        <Winner gameover={gameover} winner={winner} />
         <Leaderboard
           playerwin={this.state.gameover && this.state.winner === PLAYER2}
           difficulty={this.props.settings.difficulty}
