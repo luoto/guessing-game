@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+
 import stopPropagation from '../../helpers/stopPropagation';
+
+const SubmitScoreWrapper = styled.div`
+  visibility: ${props => (props.shouldShow ? 'visible' : 'hidden')};
+`;
 
 class SubmitScore extends Component {
   state = {
@@ -21,7 +27,7 @@ class SubmitScore extends Component {
 
   render() {
     return (
-      <div>
+      <SubmitScoreWrapper shouldShow={this.props.shouldShow}>
         <input
           type="text"
           placeholder="username"
@@ -31,7 +37,7 @@ class SubmitScore extends Component {
           onKeyDown={stopPropagation}
         />
         <button onClick={this.saveScore}>Submit</button>
-      </div>
+      </SubmitScoreWrapper>
     );
   }
 }

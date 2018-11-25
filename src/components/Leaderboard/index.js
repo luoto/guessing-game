@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+
 import SubmitScore from './SubmitScore';
 import Scoreboard from './Scoreboard';
 
@@ -41,13 +42,14 @@ class Leaderboard extends Component {
   };
 
   render() {
+    const { showSubmit, scores } = this.state;
+    const shouldShowSubmit = this.props.playerwin && showSubmit;
+
     return (
       <div>
         <h2>Leaderboard</h2>
-        {this.props.playerwin && this.state.showSubmit && (
-          <SubmitScore saveScore={this.saveScore} />
-        )}
-        <Scoreboard scores={this.state.scores} />
+        <SubmitScore shouldShow={shouldShowSubmit} saveScore={this.saveScore} />
+        <Scoreboard scores={scores} />
       </div>
     );
   }
