@@ -1,11 +1,19 @@
 import React, { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
 import 'normalize.css';
+import 'react-toastify/dist/ReactToastify.css';
+
 import GuessingGame from './components/GuessingGame';
 import GameConfig from './components/GameConfig';
 
 class App extends Component {
   render() {
-    return <GameConfig>{props => <GuessingGame {...props} />}</GameConfig>;
+    return (
+      <div>
+        <GameConfig>{props => <GuessingGame {...props} />}</GameConfig>
+        <ToastContainer />
+      </div>
+    );
   }
 }
 

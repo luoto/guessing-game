@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import letters from '../constants/letters';
-
 import styled from 'styled-components';
+import { toast } from 'react-toastify';
 
 const GuessWrapper = styled.div`
   margin: 16px;
@@ -78,8 +78,15 @@ class Guess extends Component {
   };
 
   makeFullWordGuess = () => {
-    this.props.onGuess(this.state.guess);
-    this.setState({ guess: '' });
+    const { guess } = this.state;
+    if (guess.length > 0) {
+      this.props.onGuess(guess);
+      this.setState({ guess: '' });
+    } else {
+      toast(<div>No word was entered</div>, {
+        type: toast.TYPE.ERROR
+      });
+    }
   };
 
   getKeyboardRows = () => {
@@ -133,7 +140,9 @@ class Guess extends Component {
             onKeyDown={this.stopPropagation}
             onChange={this.handleChange}
             value={this.state.guess}
+            placeholder="Enter a word..."
           />
+
           <button style={{ width: 'auto' }} onClick={this.makeFullWordGuess}>
             guess
           </button>
