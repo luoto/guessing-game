@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Guess from './Guess';
+
+import api from '../helpers/api';
+import countDistinctLetters from '../helpers/countDistinctLetters';
+
+import letters from '../constants/letters';
+
+import Rules from './Rules';
 import Health from './Health';
 import SecretWord from './SecretWord';
-import countDistinctLetters from '../helpers/countDistinctLetters';
-import letters from '../constants/letters';
-import api from '../helpers/api';
-import Leaderboard from './Leaderboard';
+import Guess from './Guess';
 import GuessedWords from './GuessedWords';
-import Rules from './Rules';
 import Winner from './Winner';
+import Leaderboard from './Leaderboard';
 
 const PLAYER1 = 'Secret Keeper';
 const PLAYER2 = 'Guesser';
@@ -170,7 +173,7 @@ class GuessingGame extends Component {
 
 GuessingGame.propTypes = {
   settings: PropTypes.shape({
-    difficulty: PropTypes.string
+    difficulty: PropTypes.string.isRequired
   })
 };
 

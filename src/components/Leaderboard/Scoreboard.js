@@ -34,7 +34,7 @@ class Scoreboard extends Component {
 }
 
 Scoreboard.propTypes = {
-  scores: PropTypes.array
+  scores: PropTypes.array.isRequired
 };
 
 export default Scoreboard;

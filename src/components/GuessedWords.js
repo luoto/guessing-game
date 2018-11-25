@@ -22,7 +22,7 @@ class GuessedWords extends React.Component {
 }
 
 GuessedWords.propTypes = {
-  words: PropTypes.array
+  words: PropTypes.array.isRequired
 };
 
 export default GuessedWords;

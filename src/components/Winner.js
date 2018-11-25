@@ -29,7 +29,7 @@ const Winner = ({ gameover, winner }) =>
 
 Winner.propTypes = {
   winner: PropTypes.string,
-  gameover: PropTypes.bool
+  gameover: PropTypes.bool.isRequired
 };
 
 export default Winner;

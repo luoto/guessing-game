@@ -43,7 +43,8 @@ class SubmitScore extends Component {
 }
 
 SubmitScore.proptypes = {
-  saveScore: PropTypes.func
+  shouldShow: PropTypes.bool.isRequired,
+  saveScore: PropTypes.func.isRequired
 };
 
 export default SubmitScore;

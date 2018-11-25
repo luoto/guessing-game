@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import letters from '../constants/letters';
 import styled from 'styled-components';
 import { toast } from 'react-toastify';
 
+import letters from '../constants/letters';
 import stopPropagation from '../helpers/stopPropagation';
 
 const GuessWrapper = styled.div`
