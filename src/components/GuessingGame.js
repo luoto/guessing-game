@@ -14,6 +14,7 @@ import Guess from './Guess';
 import GuessedWords from './GuessedWords';
 import Winner from './Winner';
 import Leaderboard from './Leaderboard';
+import Settings from './Settings';
 
 export const PLAYER1 = 'Secret Keeper';
 export const PLAYER2 = 'Guesser';
@@ -53,7 +54,7 @@ class GuessingGame extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.settings.difficulty !== this.props.settings.difficulty) {
+    if (prevProps.difficulty !== this.props.difficulty) {
       this.resetGame();
     }
   }
@@ -143,7 +144,7 @@ class GuessingGame extends Component {
   };
 
   render() {
-    const { difficulty } = this.props.settings;
+    const { difficulty } = this.props;
 
     const {
       totalHealth,
@@ -162,6 +163,10 @@ class GuessingGame extends Component {
     return (
       <GuessingGameWrapper className="App">
         <Rules />
+          <Settings
+            difficulty={this.props.difficulty}
+            saveSettings={this.props.saveSettings}
+          />
         <Health totalHealth={totalHealth} currentHealth={currentHealth} />
         <SecretWord secretWord={secretWord} revealedLetters={revealedLetters} />
         <Guess
@@ -184,9 +189,7 @@ class GuessingGame extends Component {
 }
 
 GuessingGame.propTypes = {
-  settings: PropTypes.shape({
-    difficulty: PropTypes.string.isRequired
-  })
+  difficulty: PropTypes.string.isRequired
 };
 
 export default GuessingGame;

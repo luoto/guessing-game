@@ -1,76 +1,34 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import React from 'react';
 
-const GameConfigHeader = styled.div`
-  padding: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid #d3d3d3;
-  margin-bottom: 32px;
+const DEFAULT_DIFFICULTY = 'medium';
 
-  label {
-    margin-right: 16px;
-  }
-
-  select {
-    margin-left: 4px;
-  }
-`;
-
-class Settings extends Component {
+class GameConfig extends React.Component {
   state = {
     loading: true,
-    settings: {
-      difficulty: 'medium'
-    }
+    difficulty: DEFAULT_DIFFICULTY
   };
 
   componentDidMount() {
     this.setState({
-      ...JSON.parse(localStorage.getItem('settings')),
+      difficulty: localStorage.getItem('difficulty') || DEFAULT_DIFFICULTY,
       loading: false
     });
   }
 
-  saveSettings = () => {
-    localStorage.setItem(
-      'settings',
-      JSON.stringify({ ...this.state.settings })
-    );
-  };
-
-  handleChange = e => {
-    const { name, value } = e.target;
+  saveSettings = difficulty => {
+    localStorage.setItem('difficulty', difficulty);
 
     this.setState({
-      settings: { [name]: value }
+      difficulty
     });
   };
 
   render() {
-    return (
-      <>
-        <GameConfigHeader>
-          <label>
-            Difficulty
-            <select
-              name="difficulty"
-              value={this.state.settings.difficulty}
-              onChange={this.handleChange}
-            >
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
-          </label>
-
-          <button onClick={this.saveSettings}>Save</button>
-        </GameConfigHeader>
-        {this.props.children(this.state)}
-      </>
-    );
+    return this.props.children({
+      ...this.state,
+      saveSettings: this.saveSettings
+    });
   }
 }
 
-export default Settings;
+export default GameConfig;
