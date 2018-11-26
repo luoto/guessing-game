@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`does not show 1`] = `
+.c0 {
+  visibility: hidden;
+}
+
+<SubmitScore
+  shouldShow={false}
+>
+  <styled.div
+    shouldShow={false}
+  >
+    <StyledComponent
+      forwardedClass={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "c0",
+            "rules": Array [
+              "
+  visibility: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.div",
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "div",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      shouldShow={false}
+    >
+      <div
+        className="c0"
+      >
+        <input
+          name="username"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          placeholder="username"
+          type="text"
+        />
+        <button
+          onClick={[Function]}
+        >
+          Submit
+        </button>
+      </div>
+    </StyledComponent>
+  </styled.div>
+</SubmitScore>
+`;
+
+exports[`shows 1`] = `
+.c0 {
+  visibility: visible;
+}
+
+<SubmitScore
+  shouldShow={true}
+>
+  <styled.div
+    shouldShow={true}
+  >
+    <StyledComponent
+      forwardedClass={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "attrs": Array [],
+          "componentStyle": ComponentStyle {
+            "componentId": "sc-bdVaJa",
+            "isStatic": false,
+            "lastClassName": "c0",
+            "rules": Array [
+              "
+  visibility: ",
+              [Function],
+              ";
+",
+            ],
+          },
+          "displayName": "styled.div",
+          "render": [Function],
+          "styledComponentId": "sc-bdVaJa",
+          "target": "div",
+          "toString": [Function],
+          "warnTooManyClasses": [Function],
+          "withComponent": [Function],
+        }
+      }
+      forwardedRef={null}
+      shouldShow={true}
+    >
+      <div
+        className="c0"
+      >
+        <input
+          name="username"
+          onChange={[Function]}
+          onKeyDown={[Function]}
+          placeholder="username"
+          type="text"
+        />
+        <button
+          onClick={[Function]}
+        >
+          Submit
+        </button>
+      </div>
+    </StyledComponent>
+  </styled.div>
+</SubmitScore>
+`;

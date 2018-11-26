@@ -15,7 +15,7 @@ const SecretWord = ({ secretWord, revealedLetters }) => (
   <SecretWordWrapper>
     {secretWord ? (
       Array.from(secretWord).map((letter, index) => (
-        <div key={index} letter={letter}>
+        <div key={index} data-test="letter">
           {revealedLetters.includes(letter) ? letter : '_'}
         </div>
       ))

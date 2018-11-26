@@ -12,7 +12,7 @@ const DIFFICULTIES = {
 
 const api = {
   getWord: options => {
-    if (process.env.REACT_APP_USE_LIVE_API.toLowerCase() === 'true') {
+    if (process.env.REACT_APP_USE_LIVE_API === 'true') {
       const randomIndex = Math.floor(Math.random() * NUMBER_OF_WORDS);
       const queryString = `?start=${randomIndex}&count=1&difficulty=${
         DIFFICULTIES[options.difficulty]
@@ -27,7 +27,7 @@ const api = {
           console.error(error);
         });
     } else {
-      return DEFAULT_WORD;
+      return Promise.resolve(DEFAULT_WORD);
     }
   }
 };

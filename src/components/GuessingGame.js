@@ -15,11 +15,11 @@ import GuessedWords from './GuessedWords';
 import Winner from './Winner';
 import Leaderboard from './Leaderboard';
 
-const PLAYER1 = 'Secret Keeper';
-const PLAYER2 = 'Guesser';
+export const PLAYER1 = 'Secret Keeper';
+export const PLAYER2 = 'Guesser';
 const STARTING_HEALTH = 6;
 
-const initialState = {
+export const initialState = {
   totalHealth: STARTING_HEALTH,
   currentHealth: STARTING_HEALTH,
   secretWord: '',
@@ -43,6 +43,12 @@ class GuessingGame extends Component {
   state = initialState;
 
   componentDidMount() {
+    /*
+     * Is an antipattern but is a workaround for now. This component tries to call setState due to async call to API
+     * but the component is unmounted before it is completed, which produces a warning.
+     * ref: https://stackoverflow.com/questions/49906437/how-to-cancel-a-fetch-on-componentwillunmount
+     */
+    this.mounted = true;
     this.getSecretWord();
   }
 
@@ -52,11 +58,17 @@ class GuessingGame extends Component {
     }
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   getSecretWord = async () => {
     const secretWord = await api.getWord({ difficulty: this.props.difficulty });
-    this.setState({
-      secretWord
-    });
+    if (this.mounted) {
+      this.setState({
+        secretWord
+      });
+    }
   };
 
   resetGame = () => {

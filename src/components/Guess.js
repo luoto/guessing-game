@@ -110,6 +110,7 @@ class Guess extends Component {
   render() {
     const renderLetterButton = letter => (
       <button
+        id={letter}
         onClick={this.onClickHandler}
         key={letter}
         disabled={this.isUsed(letter)}
@@ -141,7 +142,11 @@ class Guess extends Component {
             placeholder="Enter a word..."
           />
 
-          <button style={{ width: 'auto' }} onClick={this.makeFullWordGuess}>
+          <button
+            data-test="submit-word"
+            style={{ width: 'auto' }}
+            onClick={this.makeFullWordGuess}
+          >
             guess
           </button>
         </div>

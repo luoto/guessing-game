@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with 1 row 1`] = `
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Username
+        </th>
+        <th>
+          Date
+        </th>
+        <th>
+          Difficulty
+        </th>
+        <th>
+          Score
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        key="1543132800000"
+      >
+        <td>
+          luoto
+        </td>
+        <td>
+          11/25/2018
+        </td>
+        <td>
+          medium
+        </td>
+        <td>
+          5
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
