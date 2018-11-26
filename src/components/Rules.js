@@ -15,7 +15,7 @@ class Rules extends React.Component {
             the secret word
           </li>
           <li>
-            THe guesser may guess the full word instead of just letters one at a
+            The guesser may guess the full word instead of just letters one at a
             time, and it will count those against the guesses total
           </li>
           <li>
