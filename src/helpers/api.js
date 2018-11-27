@@ -6,24 +6,33 @@ const endpoint = 'http://app.linkedin-reach.io/words';
 const hintEndpoint = 'https://googledictionaryapi.eu-gb.mybluemix.net';
 
 const NUMBER_OF_WORDS = 162413;
-const DEFAULT_WORD = 'banana';
+const DEFAULT_WORD = 'horse';
 const DIFFICULTIES = {
   easy: 2,
   medium: 5,
   hard: 9
 };
 
+const DEBUG = process.env.REACT_APP_DEBUG === 'true';
+const USE_LIVE_API = process.env.REACT_APP_USE_LIVE_API === 'true';
+
 const api = {
   getWord: options => {
-    if (process.env.REACT_APP_USE_LIVE_API === 'true') {
+    if (DEBUG) {
+      console.log('getWord has been called');
+    }
+
+    if (USE_LIVE_API) {
       const randomIndex = Math.floor(Math.random() * NUMBER_OF_WORDS);
       const queryString = `?start=${randomIndex}&count=1&difficulty=${
         DIFFICULTIES[options.difficulty]
       }`;
-
       return axios
         .get(`${proxy}${endpoint}${queryString}`)
         .then(response => {
+          if (DEBUG) {
+            console.log(response);
+          }
           return response.data;
         })
         .catch(console.error);
@@ -32,16 +41,28 @@ const api = {
     }
   },
   getDefinition: word => {
-    if (process.env.REACT_APP_USE_LIVE_API === 'true') {
+    if (DEBUG) {
+      console.log('getDefinition has been called');
+    }
+
+    if (USE_LIVE_API) {
       return axios
         .get(`${proxy}${hintEndpoint}?define=${word}&lang=en`)
         .then(response => {
+          if (DEBUG) {
+            console.log(response);
+          }
           return response.data.meaning;
         })
         .catch(console.error);
     } else {
       return Promise.resolve({
-        noun: [{ definition: 'a fruit' }, { definition: 'a tropical fruit' }]
+        noun: [
+          {
+            definition:
+              'A large plant-eating domesticated mammal with solid hoofs and a flowing mane and tail, used for riding, racing, and to carry and pull loads.'
+          }
+        ]
       });
     }
   }
