@@ -244,7 +244,7 @@ class GuessingGame extends Component {
             <Settings
               difficulty={this.props.difficulty}
               saveSettings={this.props.saveSettings}
-              toggleSettings={this.toggleSettings}
+              toggleSettings={() => this.toggle('settings')}
             />
           </Modal>
         </MainWrapper>
