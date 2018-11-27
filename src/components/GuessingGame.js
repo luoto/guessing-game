@@ -13,6 +13,7 @@ import Guess from './Guess';
 import GuessedWords from './GuessedWords';
 import Winner from './Winner';
 import Leaderboard from './Leaderboard';
+import Hint from './Hint';
 import Modal from './Modal';
 import Settings from './Settings';
 
@@ -190,6 +191,7 @@ class GuessingGame extends Component {
             </li>
           </ul>
         </nav>
+        <Hint word={secretWord} />
 
         <Modal isOpen={this.state.rules} close={this.toggleRules}>
           <Rules />
