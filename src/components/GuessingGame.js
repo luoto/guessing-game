@@ -16,6 +16,7 @@ import Leaderboard from './Leaderboard';
 import Hint from './Hint';
 import Modal from './Modal';
 import Settings from './Settings';
+import Nav from './Nav';
 
 export const PLAYER1 = 'Secret Keeper';
 export const PLAYER2 = 'Guesser';
@@ -32,6 +33,7 @@ export const initialState = {
   gameover: false,
   winner: null,
   leaderboard: false,
+  hint: false,
   rules: false,
   settings: false
 };
@@ -39,29 +41,34 @@ export const initialState = {
 const GuessingGameWrapper = styled.div`
   display: grid;
   justify-items: center;
+  grid-template-columns: 1fr 80px;
+  height: calc(100vh - 85px);
+
+  @media (max-width: 545px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
-const Nav = styled.div`
-  ul {
-    list-style: none;
-    padding: 0;
-  }
+const NavWrapper = styled.div`
+  grid-column: 2;
+  grid-row: 1 / span 5;
+  border-left: 1px solid #f0f0f0;
+  box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.04);
 
-  li {
-    display: inline-block;
-    margin-left: 8px;
+  @media (max-width: 545px) {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    border-bottom: 1px solid #f0f0f0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.04);
   }
+`;
 
-  button {
-    border: none;
-    background: none;
-    cursor: pointer;
-
-    &:hover {
-      color: rebeccapurple;
-      background: lighten(rebeccapurple, 20%);
-    }
-  }
+const MainWrapper = styled.div`
+  display: grid;
+  max-width: 500px;
+  padding: 32px;
+  justify-items: center;
 `;
 
 class GuessingGame extends Component {
@@ -70,7 +77,7 @@ class GuessingGame extends Component {
   componentDidMount() {
     /*
      * Is an antipattern but is a workaround for now. This component tries to call setState due to async call to API
-     * but the component is unmounted before it is completed, which produces a warning.
+     * but the component is unmounted before it is completed, which produces a warning during tests.
      * ref: https://stackoverflow.com/questions/49906437/how-to-cancel-a-fetch-on-componentwillunmount
      */
     this.mounted = true;
@@ -132,9 +139,7 @@ class GuessingGame extends Component {
       const revealedAllLetters =
         state.revealedLetters.length + 1 === countDistinctLetters(secretWord);
       if (revealedAllLetters || guess === secretWord) {
-        this.setState({
-          leaderboard: true
-        });
+        newState.leaderboard = true;
         newState.gameover = true;
         newState.winner = PLAYER2;
         newState.revealedLetters = [...this.state.revealedLetters, ...guess];
@@ -164,22 +169,15 @@ class GuessingGame extends Component {
       if (outOfHealth) {
         newState.gameover = true;
         newState.winner = PLAYER1;
+        newState.leaderboard = true;
       }
 
       return newState;
     });
   };
 
-  toggleRules = () => {
-    this.setState(prevState => ({ rules: !prevState.rules }));
-  };
-
-  toggleLeaderboard = () => {
-    this.setState(prevState => ({ leaderboard: !prevState.leaderboard }));
-  };
-
-  toggleSettings = () => {
-    this.setState(prevState => ({ settings: !prevState.settings }));
+  toggle = name => {
+    this.setState(prevState => ({ [name]: !prevState[name] }));
   };
 
   render() {
@@ -201,53 +199,55 @@ class GuessingGame extends Component {
 
     return (
       <GuessingGameWrapper>
-        <Nav>
-          <ul>
-            <li>
-              <button onClick={this.toggleRules}>Rules</button>
-            </li>
-            <li>
-              <button onClick={this.toggleLeaderboard}>Leaderboard</button>
-            </li>
-
-            <li>
-              <button onClick={this.resetGame}>Reset</button>
-            </li>
-            <li>
-              <button onClick={this.toggleSettings}>Settings</button>
-            </li>
-          </ul>
-        </Nav>
-        <Health totalHealth={totalHealth} currentHealth={currentHealth} />
-        <SecretWord secretWord={secretWord} revealedLetters={revealedLetters} />
-        <Hint word={secretWord} />
-        <Guess
-          onGuess={this.onGuess}
-          letters={letters}
-          correctlyGuessedLetters={correctlyGuessedLetters}
-          incorrectlyGuessedLetters={incorrectlyGuessedLetters}
-        />
-        <GuessedWords words={guessedWords} />
-        <Winner gameover={gameover} winner={winner} />
-
-        <Modal isOpen={this.state.rules} close={this.toggleRules}>
-          <Rules />
-        </Modal>
-
-        <Modal isOpen={this.state.leaderboard} close={this.toggleLeaderboard}>
-          <Leaderboard
-            playerwin={playerwin}
-            difficulty={difficulty}
-            score={currentHealth}
+        <NavWrapper>
+          <Nav resetGame={this.resetGame} toggle={this.toggle} />
+        </NavWrapper>
+        <MainWrapper>
+          <Health totalHealth={totalHealth} currentHealth={currentHealth} />
+          <GuessedWords words={guessedWords} />
+          <SecretWord
+            secretWord={secretWord}
+            revealedLetters={revealedLetters}
           />
-        </Modal>
 
-        <Modal isOpen={this.state.settings} close={this.toggleSettings}>
-          <Settings
-            difficulty={this.props.difficulty}
-            saveSettings={this.props.saveSettings}
+          <Guess
+            onGuess={this.onGuess}
+            letters={letters}
+            correctlyGuessedLetters={correctlyGuessedLetters}
+            incorrectlyGuessedLetters={incorrectlyGuessedLetters}
           />
-        </Modal>
+
+          <Modal isOpen={this.state.rules} close={() => this.toggle('rules')}>
+            <Rules />
+          </Modal>
+
+          <Modal
+            isOpen={this.state.leaderboard}
+            close={() => this.toggle('leaderboard')}
+          >
+            <Winner gameover={gameover} winner={winner} />
+            <Leaderboard
+              playerwin={playerwin}
+              difficulty={difficulty}
+              score={currentHealth}
+            />
+          </Modal>
+
+          <Modal isOpen={this.state.hint} close={() => this.toggle('hint')}>
+            <Hint word={secretWord} />
+          </Modal>
+
+          <Modal
+            isOpen={this.state.settings}
+            close={() => this.toggle('settings')}
+          >
+            <Settings
+              difficulty={this.props.difficulty}
+              saveSettings={this.props.saveSettings}
+              toggleSettings={this.toggleSettings}
+            />
+          </Modal>
+        </MainWrapper>
       </GuessingGameWrapper>
     );
   }

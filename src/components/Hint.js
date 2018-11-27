@@ -3,27 +3,29 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import api from '../helpers/api';
 
-const HintWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+const HintWrapper = styled.div``;
 
-  button {
-    width: 100px;
-  }
-`;
+const Definition = styled.div``;
 
-const Definition = styled.div`
-  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+const PartOfSpeech = styled.span`
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 2px;
+  background: #f0f0f0;
 `;
 
 class Hint extends React.Component {
   state = {
-    visible: false,
     definition: {}
   };
 
   componentDidMount() {
+    /*
+     * Is an antipattern but is a workaround for now. This component tries to call setState due to async call to API
+     * but the component is unmounted before it is completed, which produces a warning during tests.
+     * ref: https://stackoverflow.com/questions/49906437/how-to-cancel-a-fetch-on-componentwillunmount
+     */
+    this.mounted = true;
     this.getDefinition(this.props.word);
   }
 
@@ -33,25 +35,49 @@ class Hint extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   getDefinition = async word => {
     let definition = await api.getDefinition(word);
-    this.setState({
-      definition
-    });
+    if (this.mounted) {
+      this.setState({
+        definition
+      });
+    }
   };
 
-  showHint = () => {
-    this.setState({
-      visible: true
+  displayDefinition = () => {
+    const { definition } = this.state;
+    return Object.keys(definition).map(key => {
+      return (
+        <div key={key}>
+          <div>
+            <PartOfSpeech>{key}</PartOfSpeech>
+          </div>
+          <ol>
+            {definition[key].map((defObject, index) => (
+              <li key={index}>
+                <p>{defObject.definition}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      );
     });
   };
 
   render() {
     return (
       <HintWrapper>
-        <button onClick={this.showHint}>Show Hint</button>
-        <Definition visible={this.state.visible}>
-          <pre>{JSON.stringify(this.state.definition)}</pre>
+        <h2>Hint</h2>
+        <Definition>
+          {this.state.definition ? (
+            this.displayDefinition()
+          ) : (
+            <p>Sorry, can't give you any hints for this word...</p>
+          )}
         </Definition>
       </HintWrapper>
     );

@@ -5,7 +5,28 @@ import styled from 'styled-components';
 import stopPropagation from '../../helpers/stopPropagation';
 
 const SubmitScoreWrapper = styled.div`
-  visibility: ${props => (props.shouldShow ? 'visible' : 'hidden')};
+  display: ${props => (props.shouldShow ? 'block' : 'none')};
+  margin-bottom: 16px;
+
+  input {
+    margin-right: 8px;
+    padding: 2px 4px;
+    border: 1px solid #c0c0c0;
+  }
+
+  button {
+    height: 25px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid #82c91e;
+      background: #82c91e;
+      color: white;
+    }
+  }
 `;
 
 class SubmitScore extends Component {

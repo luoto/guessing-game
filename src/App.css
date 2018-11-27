@@ -1,7 +1,23 @@
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   font-family: 'Open Sans', sans-serif;
 }
 
 body {
   background: white;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+li,
+button,
+input,
+select {
+  color: #495057;
 }

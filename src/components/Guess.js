@@ -7,12 +7,18 @@ import letters from '../constants/letters';
 import stopPropagation from '../helpers/stopPropagation';
 
 const GuessWrapper = styled.div`
+  width: 100%;
   margin: 16px;
-  width: 400px;
   text-align: center;
 
   div {
     display: inline-block;
+  }
+
+  input {
+    height: 26px;
+    padding: 1px 8px 2px 8px;
+    border: 1px solid #e0e0e0;
   }
 
   button {
@@ -20,17 +26,55 @@ const GuessWrapper = styled.div`
     width: 32px;
     height: 32px;
     margin: 4px;
-    background: white;
+    border: 1px solid #e0e0e0;
     border-radius: 2px;
+    background: white;
+    cursor: pointer;
+
+    @media (max-width: 545px) {
+      margin: 1px;
+      width: 30px;
+      height: 30px;
+    }
+
+    @media (max-width: 375px) {
+      margin: 1px;
+      width: 29px;
+      height: 29px;
+    }
   }
 
   .correct {
-    border: 1px solid #7ec0ee;
+    border: 1px solid #82c91e;
+    color: #82c91e;
   }
 
   .incorrect {
     border: 1px solid red;
+    color: red;
   }
+`;
+
+const FullGuess = styled.div`
+  margin: 8px;
+`;
+
+const ButtonRow = styled.div``;
+
+const Info = styled.div`
+  width: 100%;
+  margin: 16px 0;
+  padding: 8px;
+  background: darkgrey;
+  color: white;
+`;
+
+const Key = styled.span`
+  display: inline-block;
+  border: 2px solid white;
+  padding: 2px 4px;
+  font-size: 0.8rem;
+  font-family: mono;
 `;
 
 class Guess extends Component {
@@ -126,14 +170,14 @@ class Guess extends Component {
     );
 
     const renderRows = (rowOfLetters, index) => (
-      <div key={`${rowOfLetters}-${index}`}>
+      <ButtonRow key={`${rowOfLetters}-${index}`}>
         {rowOfLetters.map(letter => renderLetterButton(letter))}
-      </div>
+      </ButtonRow>
     );
 
     return (
       <GuessWrapper>
-        <div>
+        <FullGuess>
           <input
             name="guess"
             onKeyDown={stopPropagation}
@@ -149,8 +193,12 @@ class Guess extends Component {
           >
             guess
           </button>
-        </div>
+        </FullGuess>
         {this.getKeyboardRows().map(renderRows)}
+        <Info>
+          <i className="fas fa-info-circle" /> Press <Key>letter</Key> or click
+          a button to make a guess
+        </Info>
       </GuessWrapper>
     );
   }

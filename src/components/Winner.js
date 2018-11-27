@@ -1,29 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { PLAYER2 } from './GuessingGame';
 
 const WinnerContainer = styled.div`
-  padding: 32px;
-  width: 500px;
-  background: white;
-  border-radius: 4px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-
   span {
     margin-left: 8px;
   }
 `;
 
+const DisplayWinningText = () => (
+  <h2>
+    We have a Winner!
+    <span role="img" aria-label="cheers!">
+      🎉
+    </span>
+  </h2>
+);
+
+const DisplayLosingText = () => (
+  <h2>
+    Try again next time
+    <span role="img" aria-label="sad">
+      😰
+    </span>
+  </h2>
+);
+
 const Winner = ({ gameover, winner }) =>
   gameover && (
     <WinnerContainer>
-      <h3>
-        We have a Winner!
-        <span role="img" aria-label="cheers!">
-          🎉
-        </span>
-      </h3>
-      <p>{winner}</p>
+      {winner === PLAYER2 ? DisplayWinningText() : DisplayLosingText()}
     </WinnerContainer>
   );
 

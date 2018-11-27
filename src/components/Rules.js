@@ -1,10 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const RulesWrapper = styled.div`
+  li {
+    margin-bottom: 16px;
+  }
+`;
 
 class Rules extends React.Component {
   render() {
     return (
-      <div>
-        <h2>Game Rules</h2>
+      <RulesWrapper>
+        <h2>Rules</h2>
         <ol>
           <li>
             At the start of the game, the computer/secret-keeper will choose a
@@ -23,7 +30,7 @@ class Rules extends React.Component {
             word correctly and have not lost the game
           </li>
         </ol>
-      </div>
+      </RulesWrapper>
     );
   }
 }
