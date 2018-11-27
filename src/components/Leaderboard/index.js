@@ -35,10 +35,10 @@ class Leaderboard extends Component {
 
     localStorage.setItem('scores', JSON.stringify(scores));
 
-    this.setState({
+    this.setState(prevState => ({
       scores,
-      showSubmit: !this.state.showSubmit
-    });
+      showSubmit: !prevState.showSubmit
+    }));
   };
 
   render() {
