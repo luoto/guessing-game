@@ -95,7 +95,11 @@ class GuessingGame extends Component {
   }
 
   getSecretWord = async () => {
-    const secretWord = await api.getWord({ difficulty: this.props.difficulty });
+    let secretWord = '';
+    while (!secretWord) {
+      secretWord = await api.getWord({ difficulty: this.props.difficulty });
+    }
+
     if (this.mounted) {
       this.setState({
         secretWord
