@@ -16,7 +16,8 @@ const PartOfSpeech = styled.span`
 
 class Hint extends React.Component {
   state = {
-    definition: {}
+    definition: {},
+    loading: true
   };
 
   componentDidMount() {
@@ -31,6 +32,7 @@ class Hint extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.word !== this.props.word) {
+      this.setState({ loading: true });
       this.getDefinition(this.props.word);
     }
   }
@@ -43,14 +45,20 @@ class Hint extends React.Component {
     let definition = await api.getDefinition(word);
     if (this.mounted) {
       this.setState({
-        definition
+        definition,
+        loading: false
       });
     }
   };
 
   displayDefinition = () => {
     const { definition } = this.state;
-    return Object.keys(definition).map(key => {
+    const defnitionKeys = Object.keys(definition);
+    if (defnitionKeys.length < 1) {
+      return <p>Sorry, can't give you any hints for this word...</p>;
+    }
+
+    return defnitionKeys.map(key => {
       return (
         <div key={key}>
           <div>
@@ -59,7 +67,7 @@ class Hint extends React.Component {
           <ol>
             {definition[key].map((defObject, index) => (
               <li key={index}>
-                <p>{defObject.definition}</p>
+                <p>{defObject.definition || "That's all we can tell you..."}</p>
               </li>
             ))}
           </ol>
@@ -69,11 +77,14 @@ class Hint extends React.Component {
   };
 
   render() {
+    const { loading, definition } = this.state;
     return (
       <HintWrapper>
         <h2>Hint</h2>
         <Definition>
-          {this.state.definition ? (
+          {loading ? (
+            'Getting hint...'
+          ) : definition ? (
             this.displayDefinition()
           ) : (
             <p>Sorry, can't give you any hints for this word...</p>
