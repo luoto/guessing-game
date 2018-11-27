@@ -37,11 +37,31 @@ export const initialState = {
 };
 
 const GuessingGameWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-width: 200px;
+  display: grid;
+  justify-items: center;
+`;
+
+const Nav = styled.div`
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin-left: 8px;
+  }
+
+  button {
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      color: rebeccapurple;
+      background: lighten(rebeccapurple, 20%);
+    }
+  }
 `;
 
 class GuessingGame extends Component {
@@ -112,6 +132,9 @@ class GuessingGame extends Component {
       const revealedAllLetters =
         state.revealedLetters.length + 1 === countDistinctLetters(secretWord);
       if (revealedAllLetters || guess === secretWord) {
+        this.setState({
+          leaderboard: true
+        });
         newState.gameover = true;
         newState.winner = PLAYER2;
         newState.revealedLetters = [...this.state.revealedLetters, ...guess];
@@ -177,8 +200,8 @@ class GuessingGame extends Component {
     const playerwin = gameover && winner === PLAYER2;
 
     return (
-      <GuessingGameWrapper className="App">
-        <nav>
+      <GuessingGameWrapper>
+        <Nav>
           <ul>
             <li>
               <button onClick={this.toggleRules}>Rules</button>
@@ -186,12 +209,26 @@ class GuessingGame extends Component {
             <li>
               <button onClick={this.toggleLeaderboard}>Leaderboard</button>
             </li>
+
+            <li>
+              <button onClick={this.resetGame}>Reset</button>
+            </li>
             <li>
               <button onClick={this.toggleSettings}>Settings</button>
             </li>
           </ul>
-        </nav>
+        </Nav>
+        <Health totalHealth={totalHealth} currentHealth={currentHealth} />
+        <SecretWord secretWord={secretWord} revealedLetters={revealedLetters} />
         <Hint word={secretWord} />
+        <Guess
+          onGuess={this.onGuess}
+          letters={letters}
+          correctlyGuessedLetters={correctlyGuessedLetters}
+          incorrectlyGuessedLetters={incorrectlyGuessedLetters}
+        />
+        <GuessedWords words={guessedWords} />
+        <Winner gameover={gameover} winner={winner} />
 
         <Modal isOpen={this.state.rules} close={this.toggleRules}>
           <Rules />
@@ -211,18 +248,6 @@ class GuessingGame extends Component {
             saveSettings={this.props.saveSettings}
           />
         </Modal>
-
-        <Health totalHealth={totalHealth} currentHealth={currentHealth} />
-        <SecretWord secretWord={secretWord} revealedLetters={revealedLetters} />
-        <Guess
-          onGuess={this.onGuess}
-          letters={letters}
-          correctlyGuessedLetters={correctlyGuessedLetters}
-          incorrectlyGuessedLetters={incorrectlyGuessedLetters}
-        />
-        <button onClick={this.resetGame}>Reset Game</button>
-        <GuessedWords words={guessedWords} />
-        <Winner gameover={gameover} winner={winner} />
       </GuessingGameWrapper>
     );
   }
