@@ -28,3 +28,5 @@ npm start
 ## FAQ
 
 This app uses [CORS Anywhere](https://github.com/meetDeveloper/googleDictionaryAPI) proxy to bypass CORS restrictions and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+App was only tested on Chrome/Android.
