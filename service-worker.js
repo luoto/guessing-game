@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/guessing-game/precache-manifest.2c86f10b03026c9f9aa0e08d71a2445b.js"
+  "/guessing-game/precache-manifest.c61b9fe7486e7da317d87dae360049cb.js"
 );
 
 workbox.clientsClaim();
