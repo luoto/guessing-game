@@ -5,7 +5,7 @@ const endpoint = 'http://app.linkedin-reach.io/words';
 // ref: https://github.com/meetDeveloper/googleDictionaryAPI
 const hintEndpoint = 'https://googledictionaryapi.eu-gb.mybluemix.net';
 
-const NUMBER_OF_WORDS = 162413;
+// const NUMBER_OF_WORDS = 162413;
 const NUMBER_OF_WORDS_PER_LEVEL = 16241;
 
 const DEFAULT_WORD = 'horse';
