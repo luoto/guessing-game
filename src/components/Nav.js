@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import ReactTooltip from 'react-tooltip';
 
 import hintIcon from '../assets/icons/icons8-hint.png';
 import leaderboardIcon from '../assets/icons/icons8-leaderboard.png';
@@ -64,17 +65,17 @@ class Nav extends React.Component {
     return (
       <NavWrapper>
         <ul>
-          <li>
+          <li data-tip="rules">
             <button onClick={() => toggle('rules')} aria-label="rules">
               <img src={rulesIcon} alt="rules icon" />
             </button>
           </li>
-          <li>
+          <li data-tip="hint">
             <button onClick={() => toggle('hint')} aria-label="hint">
               <img src={hintIcon} alt="hint icon" />
             </button>
           </li>
-          <li>
+          <li data-tip="leaderboard">
             <button
               onClick={() => toggle('leaderboard')}
               aria-label="leaderboard"
@@ -83,17 +84,18 @@ class Nav extends React.Component {
             </button>
           </li>
 
-          <li>
+          <li data-tip="reset game">
             <button onClick={resetGame} aria-label="reset game">
               <img src={resetIcon} alt="reset icon" />
             </button>
           </li>
-          <li>
+          <li data-tip="settings">
             <button onClick={() => toggle('settings')} aria-label="settings">
               <img src={settingsIcon} alt="settings icon" />
             </button>
           </li>
         </ul>
+        <ReactTooltip />
       </NavWrapper>
     );
   }
