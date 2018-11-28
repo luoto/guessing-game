@@ -6,6 +6,8 @@ const endpoint = 'http://app.linkedin-reach.io/words';
 const hintEndpoint = 'https://googledictionaryapi.eu-gb.mybluemix.net';
 
 const NUMBER_OF_WORDS = 162413;
+const NUMBER_OF_WORDS_PER_LEVEL = 16241;
+
 const DEFAULT_WORD = 'horse';
 const DIFFICULTIES = {
   easy: 2,
@@ -23,7 +25,7 @@ const api = {
     }
 
     if (USE_LIVE_API) {
-      const randomIndex = Math.floor(Math.random() * NUMBER_OF_WORDS);
+      const randomIndex = Math.floor(Math.random() * NUMBER_OF_WORDS_PER_LEVEL);
       const queryString = `?start=${randomIndex}&count=1&difficulty=${
         DIFFICULTIES[options.difficulty]
       }`;
