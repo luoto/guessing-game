@@ -229,7 +229,11 @@ class GuessingGame extends Component {
             isOpen={this.state.leaderboard}
             close={() => this.toggle('leaderboard')}
           >
-            <Winner gameover={gameover} winner={winner} />
+            <Winner
+              gameover={gameover}
+              winner={winner}
+              secretWord={secretWord}
+            />
             <Leaderboard
               playerwin={playerwin}
               difficulty={difficulty}

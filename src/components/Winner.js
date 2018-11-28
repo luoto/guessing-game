@@ -27,25 +27,28 @@ const DisplayWinningText = () => (
   </Banner>
 );
 
-const DisplayLosingText = () => (
+const DisplayLosingText = secretWord => (
   <Banner>
-    Better luck next time
+    Better luck next time, the secret word was {secretWord}...
     <span role="img" aria-label="sad">
       😰
     </span>
   </Banner>
 );
 
-const Winner = ({ gameover, winner }) =>
+const Winner = ({ gameover, winner, secretWord }) =>
   gameover && (
     <WinnerContainer>
-      {winner === PLAYER2 ? DisplayWinningText() : DisplayLosingText()}
+      {winner === PLAYER2
+        ? DisplayWinningText()
+        : DisplayLosingText(secretWord)}
     </WinnerContainer>
   );
 
 Winner.propTypes = {
   winner: PropTypes.string,
-  gameover: PropTypes.bool.isRequired
+  gameover: PropTypes.bool.isRequired,
+  secretWord: PropTypes.string.isRequired
 };
 
 export default Winner;
