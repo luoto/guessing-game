@@ -14,6 +14,8 @@ const PartOfSpeech = styled.span`
   background: #f0f0f0;
 `;
 
+const cache = {};
+
 class Hint extends React.Component {
   state = {
     definition: {},
@@ -42,7 +44,14 @@ class Hint extends React.Component {
   }
 
   getDefinition = async word => {
-    let definition = await api.getDefinition(word);
+    let definition;
+
+    if (cache[word]) {
+      definition = cache[word];
+    } else {
+      definition = await api.getDefinition(word);
+      cache[word] = definition;
+    }
     if (this.mounted) {
       this.setState({
         definition,
