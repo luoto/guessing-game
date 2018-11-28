@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`displays better luck when player2 loses 1`] = `
+<styled.div>
+  <styled.p>
+    Better luck next time, the secret word was 
+    horse
+    ...
+    <span
+      aria-label="sad"
+      role="img"
+    >
+      😰
+    </span>
+  </styled.p>
+</styled.div>
+`;
+
+exports[`displays congratulations when player2 wins 1`] = `
+<styled.div>
+  <styled.p>
+    Congratulations!
+    <span
+      aria-label="cheers!"
+      role="img"
+    >
+      🎉
+    </span>
+  </styled.p>
+</styled.div>
+`;

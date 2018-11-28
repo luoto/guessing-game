@@ -70,7 +70,7 @@ class Nav extends React.Component {
             </button>
           </li>
           <li>
-            <button onClick={() => toggle('hint')} aria-label="settings">
+            <button onClick={() => toggle('hint')} aria-label="hint">
               <img src={hintIcon} alt="hint icon" />
             </button>
           </li>
