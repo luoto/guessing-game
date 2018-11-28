@@ -46,6 +46,7 @@ const GuessingGameWrapper = styled.div`
 
   @media (max-width: 545px) {
     grid-template-columns: 1fr;
+    grid-template-rows: calc(48px + 32px) minmax(0, 600px);
   }
 `;
 
@@ -59,6 +60,7 @@ const NavWrapper = styled.div`
     grid-column: 1;
     grid-row: 1;
     width: 100%;
+    max-height: calc(48px + 32px);
     border-bottom: 1px solid #f0f0f0;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.04);
   }
@@ -67,6 +69,7 @@ const NavWrapper = styled.div`
 const MainWrapper = styled.div`
   display: grid;
   max-width: 500px;
+  max-height: 600px;
   padding: 32px;
   justify-items: center;
 `;
