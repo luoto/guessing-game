@@ -4,23 +4,23 @@ self.__precacheManifest = [
     "url": "/guessing-game/static/js/runtime~main.baffc29f.js"
   },
   {
-    "revision": "f048c67511b9fa8c1f87",
-    "url": "/guessing-game/static/js/main.f048c675.chunk.js"
+    "revision": "6f6ecbdecec3e1119349",
+    "url": "/guessing-game/static/js/main.6f6ecbde.chunk.js"
   },
   {
-    "revision": "d3d4e871ef374af7ef7d",
-    "url": "/guessing-game/static/js/1.d3d4e871.chunk.js"
+    "revision": "bd0c362c035206044619",
+    "url": "/guessing-game/static/js/1.bd0c362c.chunk.js"
   },
   {
-    "revision": "f048c67511b9fa8c1f87",
+    "revision": "6f6ecbdecec3e1119349",
     "url": "/guessing-game/static/css/main.7b21fcce.chunk.css"
   },
   {
-    "revision": "d3d4e871ef374af7ef7d",
+    "revision": "bd0c362c035206044619",
     "url": "/guessing-game/static/css/1.a2b0c06e.chunk.css"
   },
   {
-    "revision": "4de561674db324d28f339698833d4bcd",
+    "revision": "c5b4df52e1d9e58df015d7fbad68130b",
     "url": "/guessing-game/index.html"
   }
 ];
