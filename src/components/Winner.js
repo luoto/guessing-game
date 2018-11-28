@@ -9,22 +9,31 @@ const WinnerContainer = styled.div`
   }
 `;
 
+const Banner = styled.p`
+  margin-top: 24px;
+  padding: 8px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  text-align: center;
+  font-weight: 900;
+`;
+
 const DisplayWinningText = () => (
-  <h2>
-    We have a Winner!
+  <Banner>
+    Congratulations!
     <span role="img" aria-label="cheers!">
       🎉
     </span>
-  </h2>
+  </Banner>
 );
 
 const DisplayLosingText = () => (
-  <h2>
-    Try again next time
+  <Banner>
+    Better luck next time
     <span role="img" aria-label="sad">
       😰
     </span>
-  </h2>
+  </Banner>
 );
 
 const Winner = ({ gameover, winner }) =>
