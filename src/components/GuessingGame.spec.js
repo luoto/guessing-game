@@ -3,11 +3,11 @@ import { shallow } from 'enzyme';
 import GuessingGame, { initialState, PLAYER1, PLAYER2 } from './GuessingGame';
 
 it('renders without crashing', () => {
-  shallow(<GuessingGame settings={{ difficulty: 'medium' }} />);
+  shallow(<GuessingGame difficulty="medium" />);
 });
 
 it('resets state to intial state', () => {
-  let wrapper = shallow(<GuessingGame settings={{ difficulty: 'medium' }} />);
+  let wrapper = shallow(<GuessingGame difficulty="medium" />);
   wrapper.setState({
     totalHealth: 6,
     currentHealth: 4,
@@ -33,7 +33,7 @@ it('resets state to intial state', () => {
 });
 
 it('decreases health on wrong guess', () => {
-  let wrapper = shallow(<GuessingGame settings={{ difficulty: 'medium' }} />);
+  let wrapper = shallow(<GuessingGame difficulty="medium" />);
   wrapper.setState({
     secretWord: 'norse',
     currentHealth: 4
@@ -46,7 +46,7 @@ it('decreases health on wrong guess', () => {
 });
 
 it('does not decrease health on correct guess', () => {
-  let wrapper = shallow(<GuessingGame settings={{ difficulty: 'medium' }} />);
+  let wrapper = shallow(<GuessingGame difficulty="medium" />);
   wrapper.setState({
     secretWord: 'norse',
     currentHealth: 4
@@ -59,7 +59,7 @@ it('does not decrease health on correct guess', () => {
 });
 
 it('sets winner to computer when no more health', () => {
-  let wrapper = shallow(<GuessingGame settings={{ difficulty: 'medium' }} />);
+  let wrapper = shallow(<GuessingGame difficulty="medium" />);
   wrapper.setState({
     currentHealth: 1,
     secretWord: 'norse'
@@ -73,7 +73,7 @@ it('sets winner to computer when no more health', () => {
 });
 
 it('sets winner to guesser when word is guessed', () => {
-  let wrapper = shallow(<GuessingGame settings={{ difficulty: 'medium' }} />);
+  let wrapper = shallow(<GuessingGame difficulty="medium" />);
   wrapper.setState({
     currentHealth: 1,
     secretWord: 'dolphin'

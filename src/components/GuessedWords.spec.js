@@ -3,5 +3,6 @@ import { shallow } from 'enzyme';
 import GuessedWords from './GuessedWords';
 
 it('renders without crashing', () => {
-  shallow(<GuessedWords />);
+  const words = ['hello', 'apple', 'jack'];
+  shallow(<GuessedWords words={words} />);
 });

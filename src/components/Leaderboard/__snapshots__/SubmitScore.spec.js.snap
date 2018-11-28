@@ -2,7 +2,28 @@
 
 exports[`does not show 1`] = `
 .c0 {
-  visibility: hidden;
+  display: none;
+  margin-bottom: 16px;
+}
+
+.c0 input {
+  margin-right: 8px;
+  padding: 2px 4px;
+  border: 1px solid #c0c0c0;
+}
+
+.c0 button {
+  height: 25px;
+  border: 1px solid #c0c0c0;
+  border-radius: 2px;
+  background: none;
+  cursor: pointer;
+}
+
+.c0 button:hover {
+  border: 1px solid #82c91e;
+  background: #82c91e;
+  color: white;
 }
 
 <SubmitScore
@@ -22,9 +43,30 @@ exports[`does not show 1`] = `
             "lastClassName": "c0",
             "rules": Array [
               "
-  visibility: ",
+  display: ",
               [Function],
               ";
+  margin-bottom: 16px;
+
+  input {
+    margin-right: 8px;
+    padding: 2px 4px;
+    border: 1px solid #c0c0c0;
+  }
+
+  button {
+    height: 25px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid #82c91e;
+      background: #82c91e;
+      color: white;
+    }
+  }
 ",
             ],
           },
@@ -63,7 +105,28 @@ exports[`does not show 1`] = `
 
 exports[`shows 1`] = `
 .c0 {
-  visibility: visible;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.c0 input {
+  margin-right: 8px;
+  padding: 2px 4px;
+  border: 1px solid #c0c0c0;
+}
+
+.c0 button {
+  height: 25px;
+  border: 1px solid #c0c0c0;
+  border-radius: 2px;
+  background: none;
+  cursor: pointer;
+}
+
+.c0 button:hover {
+  border: 1px solid #82c91e;
+  background: #82c91e;
+  color: white;
 }
 
 <SubmitScore
@@ -83,9 +146,30 @@ exports[`shows 1`] = `
             "lastClassName": "c0",
             "rules": Array [
               "
-  visibility: ",
+  display: ",
               [Function],
               ";
+  margin-bottom: 16px;
+
+  input {
+    margin-right: 8px;
+    padding: 2px 4px;
+    border: 1px solid #c0c0c0;
+  }
+
+  button {
+    height: 25px;
+    border: 1px solid #c0c0c0;
+    border-radius: 2px;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px solid #82c91e;
+      background: #82c91e;
+      color: white;
+    }
+  }
 ",
             ],
           },

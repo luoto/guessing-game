@@ -9,13 +9,13 @@ it('renders without crashing', () => {
 it('shows', () => {
   let wrapper = mount(<SubmitScore shouldShow={true} />);
   expect(wrapper).toMatchSnapshot();
-  expect(wrapper).toHaveStyleRule('visibility', 'visible');
+  expect(wrapper).toHaveStyleRule('display', 'block');
 });
 
 it('does not show', () => {
   let wrapper = mount(<SubmitScore shouldShow={false} />);
   expect(wrapper).toMatchSnapshot();
-  expect(wrapper).toHaveStyleRule('visibility', 'hidden');
+  expect(wrapper).toHaveStyleRule('display', 'none');
 });
 
 it('should submit luoto', () => {

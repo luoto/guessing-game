@@ -3,10 +3,12 @@ import { shallow } from 'enzyme';
 import Winner from './Winner';
 
 it('renders without crashing', () => {
-  shallow(<Winner gameover={true} />);
+  const secretWord = 'horse';
+  shallow(<Winner gameover={true} secretWord={secretWord} />);
 });
 
 it('empty render', () => {
-  let wrapper = shallow(<Winner gameover={false} />);
+  const secretWord = 'horse';
+  let wrapper = shallow(<Winner gameover={false} secretWord={secretWord} />);
   expect(wrapper).toBeEmptyRender();
 });

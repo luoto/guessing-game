@@ -17,27 +17,15 @@ it('retrieves settings from localStorage', async () => {
 
   const childAsAFunction = jest.fn();
   shallow(<GameConfig>{childAsAFunction}</GameConfig>);
-  expect(getItemSpy).toBeCalledWith('settings');
+  expect(getItemSpy).toBeCalledWith('difficulty');
 });
 
 it('saves settings to localStorage', () => {
   let setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
-  const childAsAFunction = jest.fn();
+  const childAsAFunction = jest.fn(props => {
+    props.saveSettings('medium');
+  });
 
-  let wrapper = shallow(<GameConfig>{childAsAFunction}</GameConfig>);
-  wrapper.find('button').simulate('click');
-  expect(setItemSpy).toBeCalledWith(
-    'settings',
-    JSON.stringify({ difficulty: 'medium' })
-  );
-});
-
-it('changes settings', () => {
-  const childAsAFunction = jest.fn();
-
-  let wrapper = shallow(<GameConfig>{childAsAFunction}</GameConfig>);
-  wrapper
-    .find('select')
-    .simulate('change', { target: { name: 'difficulty', value: 'easy' } });
-  expect(wrapper.state('settings')).toEqual({ difficulty: 'easy' });
+  shallow(<GameConfig>{childAsAFunction}</GameConfig>);
+  expect(setItemSpy).toBeCalledWith('difficulty', 'medium');
 });

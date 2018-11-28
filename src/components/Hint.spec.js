@@ -3,5 +3,5 @@ import { shallow } from 'enzyme';
 import Hint from './Hint';
 
 it('renders without crashing', () => {
-  shallow(<Hint />);
+  shallow(<Hint word="horse" />);
 });
